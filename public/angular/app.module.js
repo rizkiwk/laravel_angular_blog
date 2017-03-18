@@ -2,7 +2,7 @@ var blogApp 	= angular.module('blogApp', ['ngRoute']);
 
 blogApp.config(['$routeProvider', '$locationProvider', function config($routeProvider, $locationProvider) {
 
-	// $locationProvider.hashPrefix('');
+	$locationProvider.hashPrefix('');
 
 	$routeProvider
 
@@ -12,7 +12,7 @@ blogApp.config(['$routeProvider', '$locationProvider', function config($routePro
 		})
 
 		.when('/signup', {
-			templateUrl 	: './angular/templates/article-table.template.html',
+			templateUrl 	: './angular/templates/signup-page.template.html',
 			controller		: 'mainController'
 		})
 

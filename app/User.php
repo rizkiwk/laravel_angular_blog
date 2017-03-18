@@ -10,7 +10,7 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $table        = 'users';
-    protected $primaryKey   = 'user_id';
+    protected $primaryKey   = 'uid';
     protected $connection   = 'mysql';
 
     /**
@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'user_name', 'user_email', 'password',
+        'name', 'email', 'password',
     ];
 
     /**
