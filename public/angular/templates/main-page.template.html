@@ -1,0 +1,69 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-md-4" ng-repeat="itemArticle in articleItems">
+            <div class="thumbnail">
+				<div class="caption"> 
+			 		<h3>{{itemArticle.article_title}}</h3>
+			 		<p>{{itemArticle.article_text}}</p>
+			 	</div>
+			</div>
+        </div
+        <div class="col-md-4"></div>
+    </div>
+</div>
+
+<div id="signup_modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">User Form</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="inputFullname">Full Name</label>
+                        <input type="fullname" class="form-control" id="inputFullname" placeholder="Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail">Email Address</label>
+                        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPhone">Phone Number</label>
+                        <input type="phone" class="form-control" id="inputPhone" placeholder="Phone" >
+                    </div>
+                    <button type="button" class="btn btn-primary btn-lg btn-block">Sign up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="login_modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Login User</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon glyphicon glyphicon-envelope" id="basic-addon1" aria-hidden="true"></span>
+                            <input type="text" class="form-control" placeholder="Email" aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon glyphicon glyphicon-lock" id="basic-addon1" aria-hidden="true"></span>
+                            <input type="Password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-lg btn-block">Sign in</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

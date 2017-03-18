@@ -1,0 +1,17 @@
+{
+  "name": "laravel_angular_blog",
+  "description": "Bower Laravel Angular Blog",
+  "main": "",
+  "authors": [
+    "Rizki Wais Kurniawan <develop.rizkiwk@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "public/bower",
+    "test",
+    "tests"
+  ]
+}
