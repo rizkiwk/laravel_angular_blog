@@ -1,8 +1,8 @@
 var blogApp 	= angular.module('blogApp', ['ngRoute']);
 
-blogApp.config(['$locationProvider', '$routeProvider', function config($locationProvider, $routeProvider) {
+blogApp.config(['$routeProvider', '$locationProvider', function config($routeProvider, $locationProvider) {
 
-	// $locationProvider.hashPrefix('!');
+	// $locationProvider.hashPrefix('');
 
 	$routeProvider
 
@@ -35,6 +35,8 @@ blogApp.config(['$locationProvider', '$routeProvider', function config($location
 			templateUrl 	: './angular/templates/article-form.template.html',
 			controller		: 'articleFormController'
 		})
+
+	// $locationProvider.html5Mode(true);
 
 }]);
 

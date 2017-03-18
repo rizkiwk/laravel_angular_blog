@@ -48,13 +48,15 @@ class ArticleController extends Controller
 
 		if (empty($userID)) {
 			$articles = $articleModels
-					    ->orderBy('created_at')
+					    ->join('users', 'users.user_id', '=', 'articles.user_id')
+					    ->orderBy('articles.created_at')
 					    ->take(10)
 					    ->get();
 		} else {
 			$articles = $articleModels
-					  	->where('user_id', $userID)
-					  	->orderBy('created_at')
+					  	->join('users', 'users.user_id', '=', 'articles.user_id')
+					  	->where('articles.user_id', $userID)
+					  	->orderBy('articles.created_at')
 					  	->take(10)
 					  	->get();
 		}
