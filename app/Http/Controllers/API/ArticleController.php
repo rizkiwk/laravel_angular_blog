@@ -18,7 +18,7 @@ class ArticleController extends Controller
 		$author_id 		= $request->input('uid');
 
 		$articleModel					= new Article;
-		$articleModel->user_id			= $author_id;
+		$articleModel->uid				= $author_id;
 		$articleModel->article_title	= $title;
 		$articleModel->article_text		= $description;
 		$articleStore					= $articleModel->save();
@@ -27,7 +27,7 @@ class ArticleController extends Controller
 			// Return data json.
 			return response()->json([
 				'success' => 0, 
-				'message' => 'Failed store data article.'
+				'message' => 'Failed store data new article.'
 			]);
 		}
 
@@ -35,7 +35,7 @@ class ArticleController extends Controller
 		return response()->json([
 			'success' => 1, 
 			'data' => $articleStore,
-			'message' => 'Success store data article.'
+			'message' => 'Success store data new article.'
 		]);
 
 		return response()->json(['status' => $articleStore]);
@@ -49,14 +49,14 @@ class ArticleController extends Controller
 		if (empty($userID)) {
 			$articles = $articleModels
 					    ->join('users', 'users.uid', '=', 'articles.uid')
-					    ->orderBy('articles.created_at')
+					    ->orderBy('articles.created_at', 'desc')
 					    ->take(10)
 					    ->get();
 		} else {
 			$articles = $articleModels
 					  	->join('users', 'users.uid', '=', 'articles.uid')
 					  	->where('articles.uid', $userID)
-					  	->orderBy('articles.created_at')
+					  	->orderBy('articles.created_at', 'desc')
 					  	->take(10)
 					  	->get();
 		}

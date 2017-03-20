@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- <base href="/"> -->
+    <base href="/">
 
     <title>{{ config('app.name', 'Bloggy') }}</title>
 
@@ -24,7 +24,9 @@
     <script src="./bower/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="./bower/angular/angular.min.js" type="text/javascript"></script>
     <script src="./bower/angular-route/angular-route.min.js" type="text/javascript"></script>
+    <script src="./bower/angular-cookies/angular-cookies.min.js" type="text/javascript"></script>
     <script src="./angular/app.module.js" type="text/javascript"></script>
+    <!-- <script src="./js/blog-app.js" type="text/javascript"></script> -->
     <!-- <script src="./angular/app.config.js" type="text/javascript"></script> -->
 
     <!-- <script src="./angular/components/pages/main-page.module.js" type="text/javascript"></script> -->
@@ -37,7 +39,7 @@
     </script>
 </head>
 <body>
-    <div id="app">
+    <div id="app" >
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
@@ -51,7 +53,7 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand" href="{{ url('/') }}" target="_self">
                         {{ config('app.name', 'Bloggy') }}
                     </a>
                 </div>
@@ -66,8 +68,9 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
+                            <li><a href="./#!/signin">Login</a></li>
+                            <!-- <li><a href="{{ route('login') }}" target="_self">Login</a></li> -->
+                            <li><a href="{{ route('register') }}" target="_self">Register</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -76,12 +79,10 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
+                                        <a href="./#!/dashboard">Dashboard</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
@@ -98,8 +99,5 @@
 
         <div ng-view></div>
     </div>
-
-    <!-- Scripts -->
-    <!-- <script src="{{ asset('js/app.js') }}"></script> -->
 </body>
 </html>

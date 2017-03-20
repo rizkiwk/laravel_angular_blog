@@ -1,8 +1,8 @@
-var blogApp 	= angular.module('blogApp', ['ngRoute']);
+var blogApp 	= angular.module('blogApp', ['ngRoute', 'ngCookies']);
 
 blogApp.config(['$routeProvider', '$locationProvider', function config($routeProvider, $locationProvider) {
 
-	$locationProvider.hashPrefix('');
+	// $locationProvider.hashPrefix('');
 
 	$routeProvider
 
@@ -11,13 +11,8 @@ blogApp.config(['$routeProvider', '$locationProvider', function config($routePro
 			controller 		: 'mainController'
 		})
 
-		.when('/signup', {
-			templateUrl 	: './angular/templates/signup-page.template.html',
-			controller		: 'mainController'
-		})
-
 		.when('/signin', {
-			templateUrl 	: '',
+			templateUrl 	: './angular/templates/login-page.template.html',
 			controller		: 'mainController'
 		})
 
@@ -40,7 +35,7 @@ blogApp.config(['$routeProvider', '$locationProvider', function config($routePro
 
 }]);
 
-blogApp.controller('mainController', function($scope, $http) {
+blogApp.controller('mainController', function($scope, $http, $cookies) {
 
 	// Get data list article.
 	$http({
@@ -58,21 +53,37 @@ blogApp.controller('mainController', function($scope, $http) {
 		}
 	);
 
+	$scope.login = function($loginData) {
+		$http
+		.post('./api/signin/', $loginData)
+		.then(
+			function successCallback($response) {
+				$login_data = $response.data.data;
+				$cookies.put('uuid', $login_data.uid);
+				console.log('login-data : ' + $login_data.uid);
+			},
+			function errorCallback($response) {
+				console.log('login-data : ' + $response.data.message);
+			}
+		);
+	};
+
 });
 
-blogApp.controller('dashboardController', function($scope, $http) {
+blogApp.controller('dashboardController', function($scope, $http, $UUID) {
+
 	// Get data list article.
 	$http({
 		method	: 'GET',
-		url 	: './api/article/?uid=1'
+		url 	: './api/article/?uid=' + $UUID
 	})
 	.then(
 		function successCallback($response) {
-			// console.log($response.data.data);
+			console.log($UUID);
 			$scope.articleItems = $response.data.data;
 		},
 		function errorCallback($response) {
-			console.log($response.data.message);
+			console.log($UUID);
 			// $scope.articleItems = $response.data.data;
 		}
 	);
@@ -90,11 +101,21 @@ blogApp.controller('articleFormController', function($scope, $http) {
 		.then(
 			function successCallback($response) {
 				console.log($response.data.data);
-				// $scope.articleItems = $response.data.data;
+
+				notifbox_elem = '<div class="alert alert-success alert-dismissible" role="alert">' +
+            					'<button type="button" class="close" data-dismiss="alert" aria-label="Close">' + 
+            					'<span aria-hidden="true">&times;</span></button>' + $response.data.message + '</div>';
+
+            	$('#notifBox').html(notifbox_elem);
 			},
 			function errorCallback($response) {
 				console.log($response.data.message);
-				// $scope.articleItems = $response.data.data;
+
+				notifbox_elem = '<div class="alert alert-error alert-dismissible" role="alert">' +
+            					'<button type="button" class="close" data-dismiss="alert" aria-label="Close">' + 
+            					'<span aria-hidden="true">&times;</span></button>' + $response.data.message + '</div>';
+
+            	$('#notifBox').html(notifbox_elem);
 			}
 		);
 	}
