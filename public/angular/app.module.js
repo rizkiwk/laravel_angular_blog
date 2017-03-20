@@ -35,7 +35,9 @@ blogApp.config(['$routeProvider', '$locationProvider', function config($routePro
 
 }]);
 
-blogApp.controller('mainController', function($scope, $http, $cookies) {
+blogApp.controller('mainController', function($scope, $http, $cookies, $window) {
+
+	$scope.session_login = angular.fromJson($cookies.get('__login'));
 
 	// Get data list article.
 	$http({
@@ -59,8 +61,10 @@ blogApp.controller('mainController', function($scope, $http, $cookies) {
 		.then(
 			function successCallback($response) {
 				$login_data = $response.data.data;
-				$cookies.put('uuid', $login_data.uid);
+				$cookies.put('__login', angular.toJson($login_data, true));
 				console.log('login-data : ' + $login_data.uid);
+
+				$window.location.href = '/';
 			},
 			function errorCallback($response) {
 				console.log('login-data : ' + $response.data.message);
@@ -70,20 +74,26 @@ blogApp.controller('mainController', function($scope, $http, $cookies) {
 
 });
 
-blogApp.controller('dashboardController', function($scope, $http, $UUID) {
+blogApp.controller('dashboardController', function($scope, $http, $cookies, $window) {
+
+	var controller = this;
+
+	controller.__login = angular.fromJson($cookies.get('__login'));
+
+	$scope.session_login = angular.fromJson($cookies.get('__login'));
 
 	// Get data list article.
 	$http({
 		method	: 'GET',
-		url 	: './api/article/?uid=' + $UUID
+		url 	: './api/article/?uid=' + controller.__login.uid
 	})
 	.then(
 		function successCallback($response) {
-			console.log($UUID);
 			$scope.articleItems = $response.data.data;
+			// console.log('login-data : ' + articleItems);
 		},
 		function errorCallback($response) {
-			console.log($UUID);
+			// console.log($UUID);
 			// $scope.articleItems = $response.data.data;
 		}
 	);
