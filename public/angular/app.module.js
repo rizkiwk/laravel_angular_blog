@@ -21,10 +21,9 @@ blogApp.config(['$routeProvider', '$locationProvider', function config($routePro
 			controller		: 'mainController'
 		})
 
-		.when('/logout', {
-			templateUrl 	: '',
-			controller		: 'mainController'
-		})
+		// .when('/logout', {
+		// 	controller		: 'dashboardController'
+		// })
 
 		.when('/dashboard', {
 			templateUrl 	: './angular/templates/article-table.template.html',
@@ -33,7 +32,7 @@ blogApp.config(['$routeProvider', '$locationProvider', function config($routePro
 
 		.when('/article-add', {
 			templateUrl 	: './angular/templates/article-form.template.html',
-			controller		: 'articleFormController'
+			controller		: 'dashboardController'
 		})
 
 	// $locationProvider.html5Mode(true);
@@ -66,7 +65,9 @@ blogApp.controller('mainController', function($scope, $http, $cookies, $window) 
 		.then(
 			function successCallback($response) {
 				$login_data = $response.data.data;
+				
 				$cookies.put('__login', angular.toJson($login_data, true));
+
 				console.log('login-data : ' + $login_data.uid);
 
 				$window.location.href = '/';
@@ -118,6 +119,83 @@ blogApp.controller('dashboardController', function($scope, $http, $cookies, $win
 			// $scope.articleItems = $response.data.data;
 		}
 	);
+
+	$scope.logout = function() {
+		$cookies.remove('__login');
+		$window.location.href = '/';
+	};
+
+	// POST data list article.
+	$scope.ajaxStoreArticle = function($requestArticle) {
+		$requestArticle.description = tinyMCE.activeEditor.getContent();
+		$requestArticle.uid 		= 1;
+
+		$http
+		.post('./api/article/store/', $requestArticle)
+		.then(
+			function successCallback($response) {
+				console.log($response.data.data);
+
+				notifbox_elem = '<div class="alert alert-success alert-dismissible" role="alert">' +
+            					'<button type="button" class="close" data-dismiss="alert" aria-label="Close">' + 
+            					'<span aria-hidden="true">&times;</span></button>' + $response.data.message + '</div>';
+
+            	$('#notifBox').html(notifbox_elem);
+			},
+			function errorCallback($response) {
+				console.log($response.data.message);
+
+				notifbox_elem = '<div class="alert alert-error alert-dismissible" role="alert">' +
+            					'<button type="button" class="close" data-dismiss="alert" aria-label="Close">' + 
+            					'<span aria-hidden="true">&times;</span></button>' + $response.data.message + '</div>';
+
+            	$('#notifBox').html(notifbox_elem);
+			}
+		);
+	};
+
+});
+
+blogApp.controller('UserController', function($scope, $http, $cookies, $window) {
+	
+	$scope.login = function($loginData) {
+		$http
+		.post('./api/signin/', $loginData)
+		.then(
+			function successCallback($response) {
+				$login_data = $response.data.data;
+				$cookies.put('__login', angular.toJson($login_data, true));
+				console.log('login-data : ' + $login_data.uid);
+
+				$window.location.href = '/';
+			},
+			function errorCallback($response) {
+				console.log('login-data : ' + $response.data.message);
+			}
+		);
+	};
+
+	$scope.register = function($registerData) {
+		$http
+		.post('./api/signup/', $registerData)
+		.then(
+			function successCallback($response) {
+				
+				console.log('register-data : ' + $login_data.uid);
+
+				// $window.location.href = '/';
+			},
+			function errorCallback($response) {
+				console.log('register-data : ' + $response.data.message);
+			}
+		);
+	};
+
+	$scope.logout = function() {
+		$cookies.remove('__login');
+		$window.location.href = '/';
+	};
+	
 });
 
 blogApp.controller('articleFormController', function($scope, $http) {

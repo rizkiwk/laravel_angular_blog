@@ -30,15 +30,15 @@
 
                 <li class="dropdown" ng-if="session_login != undefined">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        {{ session_login }} <span class="caret"></span>
+                        {{ session_login.name }} <span class="caret"></span>
                     </a>
 
-                    <ul class="dropdown-menu" role="menu">
+                    <ul class="dropdown-menu" role="menu" ng-controller="UserController">
                         <li>
                             <a href="./#!/dashboard">Dashboard</a>
                         </li>
                         <li>
-                            <a href="./api/logout">Logout</a>
+                            <a href="./#!/logout" class="disabled" ng-click="logout()">Logout</a>
                         </li>
                     </ul>
                 </li>
