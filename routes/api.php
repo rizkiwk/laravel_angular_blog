@@ -26,5 +26,6 @@ Route::get('/logout', 'API\AuthController@authLogout');
 
 Route::group(['prefix' => 'article'], function() {
 	Route::get('/', 'API\ArticleController@getListData');
+	Route::get('/', 'API\ArticleController@getListData');
 	Route::post('/store', 'API\ArticleController@storeData');
 });

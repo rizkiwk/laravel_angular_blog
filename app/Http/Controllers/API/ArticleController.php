@@ -83,7 +83,28 @@ class ArticleController extends Controller
 	}
 
 	public function getDetailData(Request $request) {
-		
+		$articleID 		= $request->input('pid');
+		$articleModel 	= new Article;
+
+		$articles 		= $articleModels
+					  	->join('users', 'users.uid', '=', 'articles.uid')
+					  	->where('articles.article_id', $articleID)
+					  	->first();
+
+		if (!$articles) {
+			// Return data json.
+			return response()->json([
+				'success' => 0, 
+				'message' => 'Failed get data article.'
+			]);
+		}
+
+		// Return data json.
+		return response()->json([
+			'success' => 1, 
+			'data' => $articles,
+			'message' => 'Success get data article.'
+		]);
 	}
 
 }
