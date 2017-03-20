@@ -21,18 +21,14 @@ blogApp.config(['$routeProvider', '$locationProvider', function config($routePro
 			controller		: 'mainController'
 		})
 
-		// .when('/logout', {
-		// 	controller		: 'dashboardController'
-		// })
-
 		.when('/dashboard', {
 			templateUrl 	: './angular/templates/article-table.template.html',
-			controller		: 'dashboardController'
+			controller		: 'ArticleController'
 		})
 
 		.when('/article-add', {
 			templateUrl 	: './angular/templates/article-form.template.html',
-			controller		: 'dashboardController'
+			controller		: 'ArticleController'
 		})
 
 	// $locationProvider.html5Mode(true);
@@ -40,8 +36,6 @@ blogApp.config(['$routeProvider', '$locationProvider', function config($routePro
 }]);
 
 blogApp.controller('mainController', function($scope, $http, $cookies, $window) {
-
-	$scope.session_login = angular.fromJson($cookies.get('__login'));
 
 	// Get data list article.
 	$http({
@@ -86,7 +80,7 @@ blogApp.controller('mainController', function($scope, $http, $cookies, $window) 
 				
 				console.log('register-data : ' + $login_data.uid);
 
-				// $window.location.href = '/';
+				$window.location.href = '/';
 			},
 			function errorCallback($response) {
 				console.log('register-data : ' + $response.data.message);
@@ -96,67 +90,9 @@ blogApp.controller('mainController', function($scope, $http, $cookies, $window) 
 
 });
 
-blogApp.controller('dashboardController', function($scope, $http, $cookies, $window) {
-
-	var controller = this;
-
-	controller.__login = angular.fromJson($cookies.get('__login'));
-
-	$scope.session_login = angular.fromJson($cookies.get('__login'));
-
-	// Get data list article.
-	$http({
-		method	: 'GET',
-		url 	: './api/article/?uid=' + controller.__login.uid
-	})
-	.then(
-		function successCallback($response) {
-			$scope.articleItems = $response.data.data;
-			// console.log('login-data : ' + articleItems);
-		},
-		function errorCallback($response) {
-			// console.log($UUID);
-			// $scope.articleItems = $response.data.data;
-		}
-	);
-
-	$scope.logout = function() {
-		$cookies.remove('__login');
-		$window.location.href = '/';
-	};
-
-	// POST data list article.
-	$scope.ajaxStoreArticle = function($requestArticle) {
-		$requestArticle.description = tinyMCE.activeEditor.getContent();
-		$requestArticle.uid 		= 1;
-
-		$http
-		.post('./api/article/store/', $requestArticle)
-		.then(
-			function successCallback($response) {
-				console.log($response.data.data);
-
-				notifbox_elem = '<div class="alert alert-success alert-dismissible" role="alert">' +
-            					'<button type="button" class="close" data-dismiss="alert" aria-label="Close">' + 
-            					'<span aria-hidden="true">&times;</span></button>' + $response.data.message + '</div>';
-
-            	$('#notifBox').html(notifbox_elem);
-			},
-			function errorCallback($response) {
-				console.log($response.data.message);
-
-				notifbox_elem = '<div class="alert alert-error alert-dismissible" role="alert">' +
-            					'<button type="button" class="close" data-dismiss="alert" aria-label="Close">' + 
-            					'<span aria-hidden="true">&times;</span></button>' + $response.data.message + '</div>';
-
-            	$('#notifBox').html(notifbox_elem);
-			}
-		);
-	};
-
-});
-
 blogApp.controller('UserController', function($scope, $http, $cookies, $window) {
+	
+	$scope.session_login = angular.fromJson($cookies.get('__login'));
 	
 	$scope.login = function($loginData) {
 		$http
@@ -180,13 +116,18 @@ blogApp.controller('UserController', function($scope, $http, $cookies, $window) 
 		.post('./api/signup/', $registerData)
 		.then(
 			function successCallback($response) {
-				
-				console.log('register-data : ' + $login_data.uid);
+				notifbox_elem = '<div class="alert alert-success alert-dismissible" role="alert">' +
+            					'<button type="button" class="close" data-dismiss="alert" aria-label="Close">' + 
+            					'<span aria-hidden="true">&times;</span></button>' + $response.data.message + '</div>';
 
-				// $window.location.href = '/';
+            	$('#notifBox').html(notifbox_elem);
 			},
 			function errorCallback($response) {
-				console.log('register-data : ' + $response.data.message);
+				notifbox_elem = '<div class="alert alert-error alert-dismissible" role="alert">' +
+            					'<button type="button" class="close" data-dismiss="alert" aria-label="Close">' + 
+            					'<span aria-hidden="true">&times;</span></button>' + $response.data.message + '</div>';
+
+            	$('#notifBox').html(notifbox_elem);
 			}
 		);
 	};
@@ -198,12 +139,32 @@ blogApp.controller('UserController', function($scope, $http, $cookies, $window) 
 	
 });
 
-blogApp.controller('articleFormController', function($scope, $http) {
+blogApp.controller('ArticleController', function($scope, $http, $cookies, $window) {
 	
+	var articleController = this;
+
+	articleController.__login = angular.fromJson($cookies.get('__login'));
+
+	// Get data list article.
+	$http({
+		method	: 'GET',
+		url 	: './api/article/?uid=' + articleController.__login.uid
+	})
+	.then(
+		function successCallback($response) {
+			$scope.getListArticle	= $response.data.data;
+			// console.log('login-data : ' + articleItems);
+		},
+		function errorCallback($response) {
+			// console.log($UUID);
+			// $scope.articleItems = $response.data.data;
+		}
+	);
+
 	// POST data list article.
 	$scope.ajaxStoreArticle = function($requestArticle) {
 		$requestArticle.description = tinyMCE.activeEditor.getContent();
-		$requestArticle.uid 		= 1;
+		$requestArticle.uid 		= articleController.__login.uid;
 
 		$http
 		.post('./api/article/store/', $requestArticle)
@@ -227,6 +188,6 @@ blogApp.controller('articleFormController', function($scope, $http) {
             	$('#notifBox').html(notifbox_elem);
 			}
 		);
-	}
+	};
 	
 });

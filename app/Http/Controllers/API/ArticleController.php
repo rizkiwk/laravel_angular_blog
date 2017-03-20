@@ -48,12 +48,14 @@ class ArticleController extends Controller
 
 		if (empty($userID)) {
 			$articles = $articleModels
+					    ->select('articles.*', 'users.uid', 'users.name')
 					    ->join('users', 'users.uid', '=', 'articles.uid')
 					    ->orderBy('articles.created_at', 'desc')
 					    ->take(10)
 					    ->get();
 		} else {
 			$articles = $articleModels
+					  	->select('articles.*', 'users.uid', 'users.name')
 					  	->join('users', 'users.uid', '=', 'articles.uid')
 					  	->where('articles.uid', $userID)
 					  	->orderBy('articles.created_at', 'desc')
