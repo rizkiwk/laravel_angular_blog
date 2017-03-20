@@ -24,8 +24,32 @@ class AuthController extends Controller
         });
     }
 
-	public function authRegister() {
+	public function authRegister(Request $request) {
+		$data['name'] 			= $request->input('name');
+		$data['email'] 			= $request->input('email');
+		$data['password'] 		= $request->input('password');
+		$data['re_password'] 	= $request->input('password_confirmation');
 
+		$userModel = new User;
+		$userModel->name 		= $data['name'];
+		$userModel->email 		= $data['email'];
+		$userModel->password 	= bcrypt($data['password']);
+		$userStore				= $userModel->save();
+
+        if ($userStore) {
+        	// Return data json.
+        	return response()->json([
+				'success' => 1, 
+				'data' => $userStore,
+				'message' => 'Success authentication registration.'
+			]);
+        }
+
+        // Return data json.
+		return response()->json([
+			'success' => 0, 
+			'message' => 'Failed authentication registration.'
+		]);
 	}
 
 	public function authLogin(Request $request) {

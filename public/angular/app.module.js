@@ -16,6 +16,11 @@ blogApp.config(['$routeProvider', '$locationProvider', function config($routePro
 			controller		: 'mainController'
 		})
 
+		.when('/signup', {
+			templateUrl 	: './angular/templates/register-page.template.html',
+			controller		: 'mainController'
+		})
+
 		.when('/logout', {
 			templateUrl 	: '',
 			controller		: 'mainController'
@@ -68,6 +73,22 @@ blogApp.controller('mainController', function($scope, $http, $cookies, $window) 
 			},
 			function errorCallback($response) {
 				console.log('login-data : ' + $response.data.message);
+			}
+		);
+	};
+
+	$scope.register = function($registerData) {
+		$http
+		.post('./api/signup/', $registerData)
+		.then(
+			function successCallback($response) {
+				
+				console.log('register-data : ' + $login_data.uid);
+
+				// $window.location.href = '/';
+			},
+			function errorCallback($response) {
+				console.log('register-data : ' + $response.data.message);
 			}
 		);
 	};
