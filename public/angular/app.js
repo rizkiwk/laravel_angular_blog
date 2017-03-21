@@ -68,7 +68,7 @@ $scope.login = function() {
 	$http({
 		method 	: 'POST',
 		url 	: '/api/signin/',
-		data 	: httpParamSerializerJQLike($scope.login_data),
+		data 	: $httpParamSerializerJQLike($scope.login_data),
 		headers : {'Content-Type': 'application/x-www-form-urlencoded', 'Access-Control-Allow-Origin': '*'},
 		transformRequest: function(obj) {
 		        var str = [];
