@@ -68,9 +68,9 @@ blogApp.controller('UserController', function($scope, $http, $cookies, $window) 
 			method 	: 'POST',
 			url 	: './api/signin/',
 			headers : {
-		        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+		        'Content-Type': 'application/json'
 		    },
-		    data: $loginData
+		    data: angular.toJson($loginData)
 		})
 		// .post('./api/signin/', $loginData)
 		.then(
@@ -92,9 +92,9 @@ blogApp.controller('UserController', function($scope, $http, $cookies, $window) 
 			method 	: 'POST',
 			url 	: './api/signup/',
 			headers : {
-		        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+		        'Content-Type': 'application/json'
 		    },
-		    data: $registerData
+		    data: angular.toJson($registerData)
 		})
 		// .post('./api/signup/', $registerData)
 		.then(
@@ -157,9 +157,9 @@ blogApp.controller('ArticleController', function($scope, $http, $cookies, $windo
 			method 	: 'POST',
 			url 	: './api/article/store/',
 			headers : {
-		        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+		        'Content-Type': 'application/json'
 		    },
-		    data: $requestArticle
+		    data: angular.toJson($requestArticle)
 		})
 		// .post('./api/article/store/', $requestArticle)
 		.then(
