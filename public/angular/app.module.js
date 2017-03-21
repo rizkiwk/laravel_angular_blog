@@ -40,7 +40,11 @@ blogApp.controller('mainController', function($scope, $http, $cookies, $window) 
 	// Get data list article.
 	$http({
 		method	: 'GET',
-		url 	: './api/article/'
+		url 	: './api/article/',
+		headers : {
+	        'Content-Type': 'application/json',
+	        'Accept': 'application/json'
+	    }
 	})
 	.then(
 		function successCallback($response) {
@@ -53,41 +57,6 @@ blogApp.controller('mainController', function($scope, $http, $cookies, $window) 
 		}
 	);
 
-	$scope.login = function($loginData) {
-		$http
-		.post('./api/signin/', $loginData)
-		.then(
-			function successCallback($response) {
-				$login_data = $response.data.data;
-				
-				$cookies.put('__login', angular.toJson($login_data, true));
-
-				console.log('login-data : ' + $login_data.uid);
-
-				$window.location.href = '/';
-			},
-			function errorCallback($response) {
-				console.log('login-data : ' + $response.data.message);
-			}
-		);
-	};
-
-	$scope.register = function($registerData) {
-		$http
-		.post('./api/signup/', $registerData)
-		.then(
-			function successCallback($response) {
-				
-				console.log('register-data : ' + $login_data.uid);
-
-				$window.location.href = '/';
-			},
-			function errorCallback($response) {
-				console.log('register-data : ' + $response.data.message);
-			}
-		);
-	};
-
 });
 
 blogApp.controller('UserController', function($scope, $http, $cookies, $window) {
@@ -95,8 +64,16 @@ blogApp.controller('UserController', function($scope, $http, $cookies, $window) 
 	$scope.session_login = angular.fromJson($cookies.get('__login'));
 	
 	$scope.login = function($loginData) {
-		$http
-		.post('./api/signin/', $loginData)
+		$http({
+			method 	: 'POST',
+			url 	: './api/signin/',
+			headers : {
+		        'Content-Type': 'application/json',
+		        'Accept': 'application/json'
+		    },
+		    data: $loginData
+		})
+		// .post('./api/signin/', $loginData)
 		.then(
 			function successCallback($response) {
 				$login_data = $response.data.data;
@@ -112,8 +89,16 @@ blogApp.controller('UserController', function($scope, $http, $cookies, $window) 
 	};
 
 	$scope.register = function($registerData) {
-		$http
-		.post('./api/signup/', $registerData)
+		$http({
+			method 	: 'POST',
+			url 	: './api/signup/',
+			headers : {
+		        'Content-Type': 'application/json',
+		        'Accept': 'application/json'
+		    },
+		    data: $registerData
+		})
+		// .post('./api/signup/', $registerData)
 		.then(
 			function successCallback($response) {
 				notifbox_elem = '<div class="alert alert-success alert-dismissible" role="alert">' +
@@ -148,7 +133,11 @@ blogApp.controller('ArticleController', function($scope, $http, $cookies, $windo
 	// Get data list article.
 	$http({
 		method	: 'GET',
-		url 	: './api/article/?uid=' + articleController.__login.uid
+		url 	: './api/article/?uid=' + articleController.__login.uid,
+		headers	: {
+	        'Content-Type': 'application/json',
+	        'Accept': 'application/json'
+	    }
 	})
 	.then(
 		function successCallback($response) {
@@ -166,8 +155,16 @@ blogApp.controller('ArticleController', function($scope, $http, $cookies, $windo
 		$requestArticle.description = tinyMCE.activeEditor.getContent();
 		$requestArticle.uid 		= articleController.__login.uid;
 
-		$http
-		.post('./api/article/store/', $requestArticle)
+		$http({
+			method 	: 'POST',
+			url 	: './api/article/store/',
+			headers : {
+		        'Content-Type': 'application/json',
+		        'Accept': 'application/json'
+		    },
+		    data: $requestArticle
+		})
+		// .post('./api/article/store/', $requestArticle)
 		.then(
 			function successCallback($response) {
 				console.log($response.data.data);
