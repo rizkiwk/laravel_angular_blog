@@ -41,11 +41,11 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', 'if0ck476y7axojpg.cbetxkdyhwsb.us-east-1.rds.amazonaws.com'),
+            'host' => env('DB_HOST', 'edo4plet5mhv93s3.cbetxkdyhwsb.us-east-1.rds.amazonaws.com'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'laravel_angular_blog'),
-            'username' => env('DB_USERNAME', 'iowzksiyw6nglkjh'),
-            'password' => env('DB_PASSWORD', 't4brc14gjdv2rsm9'),
+            'database' => env('DB_DATABASE', 'o7ucbp0m1qqxjj1r'),
+            'username' => env('DB_USERNAME', 'f8n0i0s5l5oe6tzn'),
+            'password' => env('DB_PASSWORD', 'o96ixq8wxvv445cg'),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
