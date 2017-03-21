@@ -68,7 +68,7 @@ blogApp.controller('UserController', function($scope, $http, $httpParamSerialize
 	$scope.login = function() {
 		$http({
 			method 	: 'POST',
-			url 	: 'http://cryptic-thicket-72914.herokuapp.com/api/signin/',
+			url 	: '/api/signin/',
 			// url 	: 'http://cryptic-thicket-72914.herokuapp.com/api/signin/',
 			data 	: $httpParamSerializer($scope.login_data),
 			headers : {'Content-Type': 'application/x-www-form-urlencoded'},
