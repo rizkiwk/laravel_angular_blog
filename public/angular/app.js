@@ -71,13 +71,7 @@ blogApp.controller('UserController', function($scope, $http, $httpParamSerialize
 			url 	: '/api/signin/',
 			// url 	: 'http://cryptic-thicket-72914.herokuapp.com/api/signin/',
 			data 	: $httpParamSerializer($scope.login_data),
-			headers : {'Content-Type': 'application/x-www-form-urlencoded'},
-			// transformRequest: function(obj) {
-		 //        var str = [];
-		 //        for(var p in obj)
-		 //        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-		 //        return str.join("&");
-			// }
+			headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
 		})
 		.then(
 			function successCallback($response) {
