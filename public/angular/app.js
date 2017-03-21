@@ -59,19 +59,21 @@ $http({
 
 });
 
-blogApp.controller('UserController', function($scope, $http, $httpParamSerializer, $cookies, $window) {
+blogApp.controller('UserController', function($scope, $http, $httpParamSerializerJQLike, $cookies, $window) {
 
 	$scope.session_login = angular.fromJson($cookies.get('__login'));
 
 	$scope.login_data = {};
 
 	$scope.login = function() {
+		console.log('login_data : '+JSON.stringify($scope.login_data));
+
 		$http({
 			method 		: 'POST',
 			url 		: '/api/signin/',
 			// url 	: 'http://cryptic-thicket-72914.herokuapp.com/api/signin/',
 			dataType 	: "json",
-			data 		: $httpParamSerializer(JSON.stringify($scope.login_data)),
+			data 		: $httpParamSerializerJQLike(JSON.stringify($scope.login_data)),
 			headers 	: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
 		})
 		.then(
