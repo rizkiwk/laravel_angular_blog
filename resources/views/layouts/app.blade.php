@@ -20,27 +20,27 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <!-- Script -->
-    <script src="./bower/jquery/dist/jquery.min.js" type="text/javascript"></script>
-    <script src="./bower/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="./bower/angular/angular.min.js" type="text/javascript"></script>
-    <script src="./bower/angular-route/angular-route.min.js" type="text/javascript"></script>
-    <script src="./bower/angular-cookies/angular-cookies.min.js" type="text/javascript"></script>
-    <script src="./angular/app.module.js" type="text/javascript"></script>
-    <!-- <script src="./js/blog-app.js" type="text/javascript"></script> -->
-    <!-- <script src="./angular/app.config.js" type="text/javascript"></script> -->
+    <!-- <script src="./bower/jquery/dist/jquery.min.js" type="text/javascript"></script> -->
+    <!-- <script src="./bower/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script> -->
+    <!-- <script src="./bower/angular/angular.min.js" type="text/javascript"></script> -->
+    <!-- <script src="./bower/angular-route/angular-route.min.js" type="text/javascript"></script> -->
+    <!-- <script src="./bower/angular-cookies/angular-cookies.min.js" type="text/javascript"></script> -->
+    <!-- <script src="./angular/app.module.js" type="text/javascript"></script> -->
 
     <!-- <script src="./angular/components/pages/main-page.module.js" type="text/javascript"></script> -->
     <!-- <script src="./angular/components/pages/main-page.component.js" type="text/javascript"></script> -->
-
-    <script>
-        window.Laravel = {!! json_encode([
-            'csrfToken' => csrf_token(),
-        ]) !!};
-    </script>
 </head>
 <body>
     <div id="app" >
         <div ng-view></div>
     </div>
+
+    <!-- Script -->
+    <script src="./bower/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="./js/app.lib.js" type="text/javascript"></script>
+    <script src="./js/app.module.js" type="text/javascript"></script>
+    <!-- <script src="./bower/angular-route/angular-route.min.js" type="text/javascript"></script> -->
+    <!-- <script src="./bower/angular-cookies/angular-cookies.min.js" type="text/javascript"></script> -->
+    <script src="./angular/app.js" type="text/javascript"></script>
 </body>
 </html>

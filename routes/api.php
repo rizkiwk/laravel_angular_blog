@@ -13,12 +13,11 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 Route::post('/signin', 'API\AuthController@authLogin');
-Route::post('/signup', 'API\AuthController@authRegister');
+Route::get('/signup', 'API\AuthController@authRegister');
 Route::get('/logout', 'API\AuthController@authLogout');
 
 // Route::post('/article-store', 'API\ArticleController@storeData');
@@ -27,5 +26,5 @@ Route::get('/logout', 'API\AuthController@authLogout');
 Route::group(['prefix' => 'article'], function() {
 	Route::get('/', 'API\ArticleController@getListData');
 	Route::get('/', 'API\ArticleController@getListData');
-	Route::post('/store', 'API\ArticleController@storeData');
+	Route::get('/store', 'API\ArticleController@storeData');
 });
