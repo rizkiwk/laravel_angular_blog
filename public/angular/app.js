@@ -1,8 +1,9 @@
 var blogApp 	= angular.module('blogApp', ['ngRoute', 'ngCookies', 'ngResource']);
 
-blogApp.config(['$routeProvider', '$locationProvider', function config($routeProvider, $locationProvider) {
+blogApp.config(['$routeProvider', '$locationProvider', '$httpProvider', function config($routeProvider, $locationProvider, $httpProvider) {
 
 	// $locationProvider.hashPrefix('');
+	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 
 	$routeProvider
 	.when('/', {
@@ -58,24 +59,25 @@ $http({
 
 });
 
-blogApp.controller('UserController', function($scope, $http, $httpParamSerializerJQLike, $cookies, $window) {
+blogApp.controller('UserController', function($scope, $http, $httpParamSerializer, $cookies, $window) {
 
-$scope.session_login = angular.fromJson($cookies.get('__login'));
+	$scope.session_login = angular.fromJson($cookies.get('__login'));
 
-$scope.login_data = {};
+	$scope.login_data = {};
 
-$scope.login = function() {
-	$http({
-		method 	: 'POST',
-		url 	: '/api/signin/',
-		data 	: $httpParamSerializerJQLike($scope.login_data),
-		headers : {'Content-Type': 'application/x-www-form-urlencoded', 'Access-Control-Allow-Origin': '*'},
-		transformRequest: function(obj) {
-		        var str = [];
-		        for(var p in obj)
-		        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-		        return str.join("&");
-		    }
+	$scope.login = function() {
+		$http({
+			method 	: 'POST',
+			url 	: 'http://cryptic-thicket-72914.herokuapp.com/api/signin/',
+			// url 	: 'http://cryptic-thicket-72914.herokuapp.com/api/signin/',
+			data 	: $httpParamSerializer($scope.login_data),
+			headers : {'Content-Type': 'application/x-www-form-urlencoded'},
+			// transformRequest: function(obj) {
+		 //        var str = [];
+		 //        for(var p in obj)
+		 //        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+		 //        return str.join("&");
+			// }
 		})
 		.then(
 			function successCallback($response) {

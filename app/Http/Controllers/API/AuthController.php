@@ -17,11 +17,11 @@ class AuthController extends Controller
 	protected $user;
 
 	public function __construct() {
-        $this->middleware(function ($request, $next) {
-            $this->user = Auth::user();
+        // $this->middleware(function ($request, $next) {
+        //     $this->user = Auth::user();
 
-            return $next($request);
-        });
+        //     return $next($request);
+        // });
     }
 
 	public function authRegister(Request $request) {
@@ -60,7 +60,7 @@ class AuthController extends Controller
             // Authentication passed...
             // return redirect()->intended('dashboard');
             
-            Auth::guard('web')->login(Auth::user());
+            Auth::login(Auth::user());
 
             if (Auth::check()) {
             	// Return data json.
