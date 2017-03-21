@@ -68,8 +68,7 @@ blogApp.controller('UserController', function($scope, $http, $cookies, $window) 
 			method 	: 'POST',
 			url 	: './api/signin/',
 			headers : {
-		        'Content-Type': 'application/json',
-		        'Accept': 'application/json'
+		        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
 		    },
 		    data: $loginData
 		})
@@ -93,8 +92,7 @@ blogApp.controller('UserController', function($scope, $http, $cookies, $window) 
 			method 	: 'POST',
 			url 	: './api/signup/',
 			headers : {
-		        'Content-Type': 'application/json',
-		        'Accept': 'application/json'
+		        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
 		    },
 		    data: $registerData
 		})
@@ -159,8 +157,7 @@ blogApp.controller('ArticleController', function($scope, $http, $cookies, $windo
 			method 	: 'POST',
 			url 	: './api/article/store/',
 			headers : {
-		        'Content-Type': 'application/json',
-		        'Accept': 'application/json'
+		        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
 		    },
 		    data: $requestArticle
 		})
