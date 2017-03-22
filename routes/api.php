@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 // CORS
 header('Access-Control-Allow-Origin: http://cryptic-thicket-72914.herokuapp.com/');
 header('Access-Control-Allow-Credentials: true');
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
