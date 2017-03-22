@@ -66,16 +66,6 @@ blogApp.controller('UserController', function($scope, $http, $httpParamSerialize
 	$scope.login_data = {};
 
 	$scope.login = function() {
-<<<<<<< HEAD
-		// $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
-		// $http.post('http://cryptic-thicket-72914.herokuapp.com/api/signin/', $httpParamSerializer($scope.login_data))
-
-		$http({
-			method 	: 'POST',
-			url 	: '/api/signin/',
-			data 	: $httpParamSerializerJQLike($scope.login_data),
-			headers : {'Content-Type': 'application/x-www-form-urlencoded', 'Access-Control-Allow-Origin': '*'}
-=======
 		console.log('login_data : '+$httpParamSerializerJQLike($scope.login_data));
 
 		$http({
@@ -84,7 +74,6 @@ blogApp.controller('UserController', function($scope, $http, $httpParamSerialize
 			// url 	: 'http://cryptic-thicket-72914.herokuapp.com/api/signin/',
 			data 		: $httpParamSerializerJQLike($scope.login_data),
 			headers 	: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
->>>>>>> origin/master
 		})
 		.then(
 			function successCallback($response) {
