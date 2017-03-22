@@ -1,8 +1,9 @@
 var blogApp 	= angular.module('blogApp', ['ngRoute', 'ngCookies', 'ngResource']);
 
-blogApp.config(['$routeProvider', '$locationProvider', function config($routeProvider, $locationProvider) {
+blogApp.config(['$routeProvider', '$locationProvider', '$httpProvider', function config($routeProvider, $locationProvider, $httpProvider) {
 
 	// $locationProvider.hashPrefix('');
+	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 
 	$routeProvider
 	.when('/', {
@@ -60,11 +61,12 @@ $http({
 
 blogApp.controller('UserController', function($scope, $http, $httpParamSerializerJQLike, $cookies, $window) {
 
-$scope.session_login = angular.fromJson($cookies.get('__login'));
+	$scope.session_login = angular.fromJson($cookies.get('__login'));
 
-$scope.login_data = {};
+	$scope.login_data = {};
 
 	$scope.login = function() {
+<<<<<<< HEAD
 		// $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 		// $http.post('http://cryptic-thicket-72914.herokuapp.com/api/signin/', $httpParamSerializer($scope.login_data))
 
@@ -73,6 +75,16 @@ $scope.login_data = {};
 			url 	: '/api/signin/',
 			data 	: $httpParamSerializerJQLike($scope.login_data),
 			headers : {'Content-Type': 'application/x-www-form-urlencoded', 'Access-Control-Allow-Origin': '*'}
+=======
+		console.log('login_data : '+$httpParamSerializerJQLike($scope.login_data));
+
+		$http({
+			method 		: 'POST',
+			url 		: '/api/signin/',
+			// url 	: 'http://cryptic-thicket-72914.herokuapp.com/api/signin/',
+			data 		: $httpParamSerializerJQLike($scope.login_data),
+			headers 	: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
+>>>>>>> origin/master
 		})
 		.then(
 			function successCallback($response) {
