@@ -1,9 +1,8 @@
 var blogApp 	= angular.module('blogApp', ['ngRoute', 'ngCookies', 'ngResource']);
 
-blogApp.config(['$routeProvider', '$locationProvider', '$httpProvider', function config($routeProvider, $locationProvider, $httpProvider) {
+blogApp.config(['$routeProvider', '$locationProvider', '$httpProvider', function config($routeProvider, $locationProvider) {
 
 	// $locationProvider.hashPrefix('');
-	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 
 	$routeProvider
 	.when('/', {
@@ -35,31 +34,35 @@ blogApp.config(['$routeProvider', '$locationProvider', '$httpProvider', function
 
 }]);
 
-blogApp.controller('mainController', function($scope, $http, $cookies, $window) {
+blogApp.factory('UserService', ['$resource', function($resource) {
 
-// Get data list article.
-$http({
-	method	: 'GET',
-	url 	: './api/article/',
-	headers : {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    }
-})
-.then(
-	function successCallback($response) {
-		// console.log($response.data.data);
-		$scope.articleItems = $response.data.data;
-	},
-	function errorCallback($response) {
-		console.log($response.data.message);
-		// $scope.articleItems = $response.data.data;
-	}
-);
+}]);
+
+blogApp.controller('mainController', [$scope, $http, $cookies, $window, function($scope, $http, $cookies, $window) {
+
+	// Get data list article.
+	$http({
+		method	: 'GET',
+		url 	: './api/article/',
+		headers : {
+	        'Content-Type': 'application/json',
+	        'Accept': 'application/json'
+	    }
+	})
+	.then(
+		function successCallback($response) {
+			// console.log($response.data.data);
+			$scope.articleItems = $response.data.data;
+		},
+		function errorCallback($response) {
+			console.log($response.data.message);
+			// $scope.articleItems = $response.data.data;
+		}
+	);
 
 });
 
-blogApp.controller('UserController', function($scope, $http, $httpParamSerializerJQLike, $cookies, $window) {
+blogApp.controller('UserController', function($scope, $http, $httpProvider, $httpParamSerializerJQLike, $cookies, $window) {
 
 	$scope.session_login = angular.fromJson($cookies.get('__login'));
 
@@ -68,13 +71,15 @@ blogApp.controller('UserController', function($scope, $http, $httpParamSerialize
 	$scope.login = function() {
 		console.log('login_data : '+$httpParamSerializerJQLike($scope.login_data));
 
-		$http({
-			method 		: 'POST',
-			url 		: '/api/signin/',
-			// url 	: 'http://cryptic-thicket-72914.herokuapp.com/api/signin/',
-			data 		: $httpParamSerializerJQLike($scope.login_data),
-			headers 	: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
-		})
+		$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded;charset=utf-8";
+		$http.post('/api/signin/', $httpParamSerializerJQLike($scope.login_data));
+		// $http({
+		// 	method 		: 'POST',
+		// 	url 		: '/api/signin/',
+		// 	// url 	: 'http://cryptic-thicket-72914.herokuapp.com/api/signin/',
+		// 	data 		: $httpParamSerializerJQLike($scope.login_data),
+		// 	headers 	: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
+		// })
 		.then(
 			function successCallback($response) {
 				$login_data = $response.data.data;
