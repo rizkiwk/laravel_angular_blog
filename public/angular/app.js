@@ -64,18 +64,15 @@ $scope.session_login = angular.fromJson($cookies.get('__login'));
 
 $scope.login_data = {};
 
-$scope.login = function() {
-	$http({
-		method 	: 'POST',
-		url 	: '/api/signin/',
-		data 	: $httpParamSerializerJQLike($scope.login_data),
-		headers : {'Content-Type': 'application/x-www-form-urlencoded', 'Access-Control-Allow-Origin': '*'},
-		transformRequest: function(obj) {
-		        var str = [];
-		        for(var p in obj)
-		        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-		        return str.join("&");
-		    }
+	$scope.login = function() {
+		// $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+		// $http.post('http://cryptic-thicket-72914.herokuapp.com/api/signin/', $httpParamSerializer($scope.login_data))
+
+		$http({
+			method 	: 'POST',
+			url 	: '/api/signin/',
+			data 	: $httpParamSerializerJQLike($scope.login_data),
+			headers : {'Content-Type': 'application/x-www-form-urlencoded', 'Access-Control-Allow-Origin': '*'}
 		})
 		.then(
 			function successCallback($response) {
